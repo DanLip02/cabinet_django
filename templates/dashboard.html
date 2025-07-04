@@ -1,0 +1,7 @@
+{% extends "base_private.html" %}
+{% block title %}Рабочий кабинет{% endblock %}
+
+{% block content %}
+  <h1 style="font-size: 2rem; color: #1e3a8a;">Привет, {{ user.first_name|default:user.username }}!</h1>
+  <p style="font-size: 1.1rem;">Добро пожаловать в рабочий кабинет</p>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base_private.html" %}
+{% block title %}Мониторинг сервисов{% endblock %}
+{% block content %}
+<h1>Мониторинг сервисов</h1>
+<ul>
+  {% for name, status in statuses.items %}
+    <li>
+      {{ name }}:
+      {% if status %}
+        <span style="color: green;">🟢 работает</span>
+      {% else %}
+        <span style="color: red;">🔴 недоступен</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

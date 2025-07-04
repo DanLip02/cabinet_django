@@ -1,0 +1,15 @@
+{% extends "base_private.html" %}
+{% block title %}Сервисы{% endblock %}
+
+{% block content %}
+  <h1 style="font-size: 2rem; color: #1e3a8a;">Используемые сервисы</h1>
+  <ul style="list-style: none; padding: 0; margin-top: 20px;">
+    {% for service in services %}
+      <li style="margin-bottom: 10px;">
+        <a href="{{ service.url }}" target="_blank" style="color: #1e40af; font-weight: bold; text-decoration: none;">
+          {{ service.name }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
