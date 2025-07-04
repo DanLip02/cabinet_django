@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Кабинет{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      background-color: #f0f6ff;
+    }
+
+    .wrapper {
+      display: flex;
+      transition: transform 0.3s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 60px 20px 20px 20px;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #c7d2fe;
+      font-weight: bold;
+    }
+
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .logout-form {
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+    }
+
+    .logout-form button {
+      background: none;
+      border: none;
+      color: #bfdbfe;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .logout-form button:hover {
+      text-decoration: underline;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: 0;
+      padding: 40px;
+      transition: margin-left 0.3s ease;
+      width: 100%;
+    }
+
+    .wrapper.shifted .main-content {
+      margin-left: 250px;
+    }
+
+    #toggleBtn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1101;
+      background: #1e40af;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<button id="toggleBtn">☰</button>
+
+<nav class="sidebar" id="sidebar">
+  <ul>
+    <li><a href="{% url 'dashboard' %}">Главная</a></li>
+    <li><a href="{% url 'services' %}">Сервисы</a></li>
+    <li><a href="{% url 'monitoring' %}">Мониторинг сервисов</a></li>
+  </ul>
+  <form method="post" action="{% url 'logout' %}" class="logout-form">
+    {% csrf_token %}
+    <button type="submit">Выйти</button>
+  </form>
+</nav>
+
+<div class="wrapper" id="wrapper">
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('toggleBtn');
+  const sidebar = document.getElementById('sidebar');
+  const wrapper = document.getElementById('wrapper');
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    wrapper.classList.toggle('shifted');
+  });
+</script>
+
+</body>
+</html>
