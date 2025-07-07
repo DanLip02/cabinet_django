@@ -1,5 +1,17 @@
 from pathlib import Path
-import dotenv
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+METABASE_URL = os.getenv("METABASE_URL")
+METABASE_USER = os.getenv("METABASE_USERNAME")
+METABASE_PASS = os.getenv("METABASE_PASSWORD")
+
+DEF_TABLE_URL = os.getenv("DEFAULT_TABLE_URL")
+DEF_TABLE_USER = os.getenv("DEFAULT_TABLE_LOGIN")
+DEF_TABLE_PASS = os.getenv("DEFAULT_TABLE_PASSWORD")
+
+print(METABASE_URL, METABASE_USER, METABASE_PASS)
 # 📁 Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -80,12 +92,25 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # 🧾 Первичный тип ключа
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+#todo there we can start to change smth
+# ex. services + log/logout url
+# change as you want
 # 🔁 Авторизация: редиректы
 LOGIN_REDIRECT_URL = "/dashboard/"
 LOGOUT_REDIRECT_URL = "/login/"
 
 SERVICES = {
-    "Github":  "https://github.com",
-    "Metabase": "https://metabase_rsbu.docker03.ratings.ru/auth/login?redirect=%2F",
-    "Default-table": "https://defaults_table_editor.docker03.ratings.ru",
+    "Github": {
+        "url": "https://github.com",
+        "auth": None
+    },
+    "Metabase": {
+        "url": METABASE_URL,
+        "auth": (METABASE_USER, METABASE_PASS),
+    },
+     "Default-table": {
+        "url": DEF_TABLE_URL,
+        "auth": (DEF_TABLE_USER, DEF_TABLE_PASS),
+    },
 }

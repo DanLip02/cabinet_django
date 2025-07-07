@@ -5,7 +5,7 @@
 <ul>
   {% for name, status in statuses.items %}
     <li>
-      {{ name }}:
+      <a style="color: #1e40af; font-weight: bold; text-decoration: none;"> {{ name }}:</a>
       {% if status %}
         <span style="color: green;">🟢 работает</span>
       {% else %}
