@@ -1,7 +1,14 @@
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .utils import check_service_status
 from django.conf import settings
+from dotenv import load_dotenv
+
+load_dotenv()
+METABASE_URL = os.getenv("METABASE_URL")
+DEFAULT_TABLE = os.getenv("DEFAULT_TABLE_URL")
 
 @login_required
 def dashboard_view(request):
@@ -11,8 +18,8 @@ def dashboard_view(request):
 def services_view(request):
     services = [
         {"name": "GitHub", "url":  "https://github.com"},
-        {"name": "Metabase", "url": "https://metabase_rsbu.docker03.ratings.ru/auth/login?redirect=%2F"},
-        {"name": "Default-table", "url": "https://defaults_table_editor.docker03.ratings.ru"}
+        {"name": "Metabase", "url": METABASE_URL},
+        {"name": "Default-table", "url": DEFAULT_TABLE}
     ]
     return render(request, "services.html", {"services": services})
 
@@ -20,7 +27,7 @@ def services_view(request):
 def services_status_view(request):
     services = settings.SERVICES
     statuses = {
-        name: check_service_status(url)
-        for name, url in services.items()
+        name: check_service_status(config)
+        for name, config in services.items()
     }
     return render(request, "services_status.html", {"statuses": statuses})
