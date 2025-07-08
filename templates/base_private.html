@@ -112,6 +112,7 @@
     <li><a href="{% url 'dashboard' %}">Главная</a></li>
     <li><a href="{% url 'services' %}">Сервисы</a></li>
     <li><a href="{% url 'monitoring' %}">Мониторинг сервисов</a></li>
+    <li><a href="{% url 'chat_room' %}">Чат</a></li>
   </ul>
   <form method="post" action="{% url 'logout' %}" class="logout-form">
     {% csrf_token %}
