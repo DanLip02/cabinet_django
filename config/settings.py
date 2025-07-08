@@ -114,3 +114,20 @@ SERVICES = {
         "auth": (DEF_TABLE_USER, DEF_TABLE_PASS),
     },
 }
+
+INSTALLED_APPS += [
+    "channels",
+    "internal_chat",  # новое приложение
+]
+
+ASGI_APPLICATION = "your_project_name.asgi.application"
+
+# Redis для хранения состояния
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}

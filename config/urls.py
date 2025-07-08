@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from dashboard.views import dashboard_view, services_view, services_status_view
 
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import RedirectView
 
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='login', redirect_field_name=None), name='logout'),
     path('services/', services_view, name='services'),  # Новый маршрут
     path('monitoring/', services_status_view, name='monitoring'),
+    path('chat/', include('internal_chat.urls')),
 
 ]
