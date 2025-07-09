@@ -16,7 +16,7 @@
 <div>
     <h3>Messages:</h3>
     {% for message in messages %}
-        <p><strong>{{ message.user.username }}</strong>: {{ message.content }}</p>
+        <p><strong>{{ message.sender.username }}</strong>: {{ message.content }}</p>
     {% empty %}
         <p>No messages yet.</p>
     {% endfor %}
