@@ -20,6 +20,8 @@ from dashboard.views import dashboard_view, services_view, services_status_view
 
 from django.urls import path, include
 from django.views.generic import RedirectView
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path("", RedirectView.as_view(url="/login/", permanent=False)),  # редирект с корня на логин
@@ -32,4 +34,4 @@ urlpatterns = [
     path('monitoring/', services_status_view, name='monitoring'),
     path('chat/', include('internal_chat.urls')),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

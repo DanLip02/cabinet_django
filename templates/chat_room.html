@@ -1,24 +1,41 @@
-{% extends "base_private.html" %}
+<!-- templates/internal_chat/chat_room.html -->
 
-{% block title %}Team Chat{% endblock %}
+{% extends 'base_private.html' %}
+{% load static %}
 
 {% block content %}
-<h1>Team Chat</h1>
+<h2>Общий чат</h2>
 
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="message" placeholder="Type your message..." required>
-    <button type="submit">Send</button>
+<div id="chat-box" style="max-height: 500px; overflow-y: auto; border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
+  {% for msg in messages %}
+    <p><strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+      {% if msg.file %}
+        <br><a href="{{ msg.file.url }}" target="_blank">📎 {{ msg.filename }}</a>
+      {% endif %}
+      <small style="float:right;">{{ msg.timestamp|date:"H:i" }}</small>
+    </p>
+    <hr>
+  {% empty %}
+    <p>No messages yet.</p>
+  {% endfor %}
+</div>
+
+<form method="post" enctype="multipart/form-data" id="chat-form">
+  {% csrf_token %}
+  {{ form.content }}
+  {{ form.file }}
+  <button type="submit">Send</button>
 </form>
 
-<hr>
+<script>
+  const chatInput = document.querySelector('.chat-input');
+  const form = document.getElementById('chat-form');
 
-<div>
-    <h3>Messages:</h3>
-    {% for message in messages %}
-        <p><strong>{{ message.sender.username }}</strong>: {{ message.content }}</p>
-    {% empty %}
-        <p>No messages yet.</p>
-    {% endfor %}
-</div>
+  chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      form.submit();
+    }
+  });
+</script>
 {% endblock %}
